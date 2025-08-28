@@ -1,1 +1,5 @@
-# ai-track-and-field
+# AI Track and Field Workshop Example
+
+Run the application with: 
+
+`./mvnw spring-boot:test-run`
