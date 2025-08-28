@@ -3,7 +3,7 @@
 I want to create a web application that allows users to manage track and field competitions.
 
 Athletes are grouped into categories and categories define which events the athletes compete in. 
-Categories have a year from and year to.
+Categories have a gender, a year from and year to.
 Athletes can be part of a club, and the category is automatically assigned based on the birth year and the gender of the athlete.
 The points are calculated based on the results of the events according to the IAAF ranking formulas.
 After every athlete has finished the competition, the points are calculated and the athlete is ranked.
