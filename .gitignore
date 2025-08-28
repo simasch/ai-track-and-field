@@ -1,7 +1,8 @@
-node_modules
-target/
-.mvn/wrapper/maven-wrapper.jar
+.idea
+.vscode
 
-### IntelliJ IDEA ###
-.idea/
-.vscode/
+.mvn/wrapper/maven-wrapper.jar
+target
+node_modules
+src/main/frontend/generated
+src/main/frontend/index.html
