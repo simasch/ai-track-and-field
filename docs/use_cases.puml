@@ -1,0 +1,85 @@
+@startuml
+!theme plain
+title Track and Field Competition Management System - Use Case Diagram
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Competition\nAdministrator" as Admin
+actor "Athlete" as Athlete
+actor "User" as User
+actor "System" as System
+
+rectangle "Track and Field Competition System" {
+  usecase (UC01: Manage Athlete\nRegistration) as UC01
+  usecase (UC02: Define Categories) as UC02
+  usecase (UC03: Assign Events\nto Categories) as UC03
+  usecase (UC04: Associate with Club) as UC04
+  usecase (UC05: Auto-assign Category\nto Athletes) as UC05
+  usecase (UC06: Record Competition\nResults) as UC06
+  usecase (UC07: Calculate Points\nIAAF Formula) as UC07
+  usecase (UC08: Mark Athlete\nCompletion) as UC08
+  usecase (UC09: View Ranking Lists) as UC09
+  usecase (UC10: Manage Clubs) as UC10
+  usecase (UC11: Manage Competitions) as UC11
+  usecase (UC12: Export Rankings\nPDF/Excel) as UC12
+  usecase (UC13: Authenticate User) as UC13
+}
+
+' Competition Administrator use cases
+Admin --> UC01 : FR-001
+Admin --> UC02 : FR-002
+Admin --> UC03 : FR-003
+Admin --> UC06 : FR-006
+Admin --> UC08 : FR-008
+Admin --> UC10 : FR-010
+Admin --> UC11 : FR-011
+Admin --> UC12 : NFR-006
+
+' Athlete use cases
+Athlete --> UC04 : FR-004
+
+' General User use cases (includes Admin and Athlete)
+User --> UC09 : FR-009
+User --> UC13 : NFR-008
+
+' System automated use cases
+System --> UC05 : FR-005
+System --> UC07 : FR-007
+
+' Dependencies and includes
+UC01 ..> UC05 : <<include>>
+UC01 ..> UC11 : <<depends on>>
+UC06 ..> UC07 : <<include>>
+UC06 ..> UC11 : <<depends on>>
+UC08 ..> UC07 : <<triggers>>
+UC09 ..> UC07 : <<depends on>>
+UC04 ..> UC10 : <<depends on>>
+UC02 ..> UC03 : <<extends>>
+UC02 ..> UC11 : <<depends on>>
+UC03 ..> UC11 : <<depends on>>
+
+' Authentication extends
+UC01 ..> UC13 : <<include>>
+UC02 ..> UC13 : <<include>>
+UC03 ..> UC13 : <<include>>
+UC06 ..> UC13 : <<include>>
+UC08 ..> UC13 : <<include>>
+UC10 ..> UC13 : <<include>>
+UC11 ..> UC13 : <<include>>
+
+note right of UC07
+  NFR-001: 100% accuracy
+  NFR-002: Update within 2 seconds
+end note
+
+note bottom of UC09
+  Grouped by category
+  Shows athlete results and points
+end note
+
+note right of System
+  Automated processes
+end note
+
+@enduml

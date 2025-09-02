@@ -1,0 +1,151 @@
+# Entity Model Documentation
+
+## Overview
+This document describes the entity model for the Track and Field Competition Management System based on the functional requirements.
+
+## Core Entities
+
+### 1. Competition
+**Purpose**: Represents a track and field competition event  
+**Key Attributes**:
+- `id`: Unique identifier (UUID, auto-generated)
+- `name`: Competition name (required, string)
+- `start_date`: Competition start date (required, date)
+- `end_date`: Competition end date (optional, date)
+- `location`: Venue location (required, string)
+- `competition_type`: Type of competition (required, enum: REGIONAL, NATIONAL, CLUB)
+- `status`: Current status (required, enum: PLANNED, ACTIVE, COMPLETED)
+- `description`: Competition description (optional, text)
+- `registration_deadline`: Deadline for athlete registration (optional, datetime)
+- `max_participants`: Maximum number of participants (optional, integer)
+- `contact_info`: Contact information (optional, JSON)
+- `created_by`: User who created the record (system-generated)
+- `created_at`: Creation timestamp (system-generated)
+- `updated_by`: User who last updated the record (system-generated)
+- `updated_at`: Last update timestamp (system-generated)
+
+**Relationships**:
+- Has many Categories
+- Has many Registrations
+
+**Business Rules**:
+- Competition names must be unique for the same date range
+- Competition cannot be deleted if it has recorded results (only archived)
+- Competition dates cannot be in the past when creating new competitions
+- Status transitions must follow: PLANNED → ACTIVE → COMPLETED
+- Only one competition can be active at the same venue on the same date
+
+### 2. Club
+**Purpose**: Organizations that athletes represent (FR-004, FR-010)  
+**Key Attributes**:
+- `id`: Unique identifier
+- `name`: Club full name
+- `abbreviation`: Short code
+- `city`: Club location
+
+**Relationships**:
+- Has many Athletes
+
+### 3. Athlete
+**Purpose**: Individuals participating in competitions (FR-001, FR-004)  
+**Key Attributes**:
+- `id`: Unique identifier
+- `first_name`, `last_name`: Athlete name
+- `birth_year`: Year of birth (used for category assignment)
+- `gender`: Male or Female (used for category assignment)
+- `license_number`: Official athlete license
+- `club_id`: Reference to athlete's club
+
+**Relationships**:
+- Belongs to one Club
+- Has many Registrations
+
+### 4. Category
+**Purpose**: Groups athletes by gender and age range (FR-002, FR-005)  
+**Key Attributes**:
+- `id`: Unique identifier
+- `competition_id`: Reference to competition
+- `name`: Category name (e.g., "U18 Male")
+- `gender`: Male or Female
+- `year_from`, `year_to`: Birth year range for eligibility
+
+**Relationships**:
+- Belongs to one Competition
+- Has many CategoryEvents (events available for this category)
+- Has many Registrations
+
+### 5. Event
+**Purpose**: Individual track and field events (e.g., 100m, Long Jump)  
+**Key Attributes**:
+- `id`: Unique identifier
+- `name`: Event name
+- `type`: TRACK or FIELD
+- `unit`: Measurement unit (MILLISECONDS for track, METERS for field)
+- `iaaf_formula`: Formula for point calculation (FR-007)
+
+**Relationships**:
+- Has many CategoryEvents
+- Has many Results
+
+### 6. CategoryEvent
+**Purpose**: Links events to categories (FR-003)  
+**Key Attributes**:
+- `id`: Unique identifier
+- `category_id`: Reference to category
+- `event_id`: Reference to event
+- `order`: Display/execution order
+
+**Relationships**:
+- Belongs to one Category
+- Belongs to one Event
+
+### 7. Registration
+**Purpose**: Links athletes to competitions and categories (FR-001, FR-005)  
+**Key Attributes**:
+- `id`: Unique identifier
+- `competition_id`: Reference to competition
+- `athlete_id`: Reference to athlete
+- `category_id`: Assigned category (auto-assigned based on age/gender)
+- `bib_number`: Competition number
+- `all_events_completed`: Flag for completion status (FR-008)
+
+**Relationships**:
+- Belongs to one Competition
+- Belongs to one Athlete
+- Belongs to one Category
+- Has many Results
+
+### 8. Result
+**Purpose**: Records athlete performance in events (FR-006, FR-007)  
+**Key Attributes**:
+- `id`: Unique identifier
+- `registration_id`: Reference to athlete's registration
+- `event_id`: Reference to event
+- `performance`: Measured result value (Integer - milliseconds for track, millimeters for field)
+- `wind_speed`: Wind measurement (for applicable events)
+- `points`: Calculated IAAF points
+- `attempt`: Attempt number
+- `is_best`: Marks best attempt
+
+**Relationships**:
+- Belongs to one Registration
+- Belongs to one Event
+
+## Key Design Decisions
+
+1. **Category Assignment**: Categories are automatically assigned to athletes during registration based on their birth year and gender (FR-005).
+
+2. **Points Calculation**: The IAAF formula is stored at the Event level and points are calculated when results are recorded (FR-007, NFR-001).
+
+3. **Ranking Generation**: Rankings can be generated by aggregating Results grouped by Category, showing total points per Registration (FR-009).
+
+4. **Event Completion Tracking**: The `all_events_completed` flag on Registration allows administrators to mark when an athlete has finished all their events (FR-008).
+
+5. **Flexible Event Assignment**: The CategoryEvent entity allows different categories to have different sets of events within the same competition (FR-003).
+
+## Data Integrity Considerations
+
+- Athletes can only be registered once per competition
+- Categories must have non-overlapping year ranges for the same gender
+- Results can only be recorded for events that are assigned to the athlete's category
+- Points are recalculated when results are updated to maintain accuracy (NFR-001, NFR-002)

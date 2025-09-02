@@ -1,0 +1,139 @@
+@startuml Entity Model - Track and Field Competition System
+
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#efefef><&media-record></color> x
+!define TABLE(x) entity x << (T, #3498db) >>
+
+title Track and Field Competition System - Entity Model
+
+TABLE(Competition) {
+  primary_key(id): UUID
+  column(name): String
+  column(start_date): Date
+  column(end_date): Date
+  column(location): String
+  column(competition_type): Enum [REGIONAL, NATIONAL, CLUB]
+  column(status): Enum [PLANNED, ACTIVE, COMPLETED]
+  column(description): Text
+  column(registration_deadline): Datetime
+  column(max_participants): Integer
+  column(contact_info): JSON
+  column(created_by): String
+  column(created_at): Timestamp
+  column(updated_by): String
+  column(updated_at): Timestamp
+}
+
+TABLE(Club) {
+  primary_key(id): UUID
+  column(name): String
+  column(abbreviation): String
+  column(city): String
+  column(created_at): Timestamp
+  column(updated_at): Timestamp
+}
+
+TABLE(Category) {
+  primary_key(id): UUID
+  foreign_key(competition_id): UUID
+  column(name): String
+  column(gender): Enum [MALE, FEMALE]
+  column(year_from): Integer
+  column(year_to): Integer
+  column(created_at): Timestamp
+  column(updated_at): Timestamp
+}
+
+TABLE(Event) {
+  primary_key(id): UUID
+  column(name): String
+  column(type): Enum [TRACK, FIELD]
+  column(unit): Enum [MILLISECONDS, METERS]
+  column(iaaf_formula): String
+  column(created_at): Timestamp
+  column(updated_at): Timestamp
+}
+
+TABLE(CategoryEvent) {
+  primary_key(id): UUID
+  foreign_key(category_id): UUID
+  foreign_key(event_id): UUID
+  column(order): Integer
+  column(created_at): Timestamp
+}
+
+TABLE(Athlete) {
+  primary_key(id): UUID
+  foreign_key(club_id): UUID
+  column(first_name): String
+  column(last_name): String
+  column(birth_year): Integer
+  column(gender): Enum [MALE, FEMALE]
+  column(license_number): String
+  column(created_at): Timestamp
+  column(updated_at): Timestamp
+}
+
+TABLE(Registration) {
+  primary_key(id): UUID
+  foreign_key(competition_id): UUID
+  foreign_key(athlete_id): UUID
+  foreign_key(category_id): UUID
+  column(bib_number): String
+  column(all_events_completed): Boolean
+  column(created_at): Timestamp
+  column(updated_at): Timestamp
+}
+
+TABLE(Result) {
+  primary_key(id): UUID
+  foreign_key(registration_id): UUID
+  foreign_key(event_id): UUID
+  column(performance): Integer
+  column(wind_speed): Decimal
+  column(points): Integer
+  column(attempt): Integer
+  column(is_best): Boolean
+  column(created_at): Timestamp
+  column(updated_at): Timestamp
+}
+
+' Relationships
+Competition ||--o{ Category : "has"
+Competition ||--o{ Registration : "has"
+Club ||--o{ Athlete : "has members"
+Category ||--o{ CategoryEvent : "includes"
+Category ||--o{ Registration : "assigns to"
+Event ||--o{ CategoryEvent : "part of"
+Event ||--o{ Result : "measured in"
+Athlete ||--o{ Registration : "participates"
+Registration ||--o{ Result : "achieves"
+
+' Notes
+note right of Competition
+  Represents a track and field
+  competition event
+end note
+
+note right of Category
+  Groups athletes by gender
+  and age range (birth years)
+end note
+
+note right of Registration
+  Links athletes to competitions
+  and their assigned category
+end note
+
+note right of Result
+  Records performance data
+  and calculated IAAF points
+end note
+
+note bottom of CategoryEvent
+  Defines which events are
+  available for each category
+end note
+
+@enduml
