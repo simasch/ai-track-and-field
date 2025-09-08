@@ -1,4 +1,4 @@
-= Production Vision
+# Production Vision
 
 The goal of the web application is to manage track and field competitions.
 
