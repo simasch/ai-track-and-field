@@ -19,12 +19,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Locale;
 
-@ActiveProfiles("test")
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest
 public abstract class KaribuTest {
