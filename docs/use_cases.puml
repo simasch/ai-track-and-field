@@ -1,0 +1,87 @@
+@startuml
+!theme plain
+title Track and Field Competition Management System - Use Cases
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Administrator" as Admin
+actor "User" as User
+actor "System" as System <<system>>
+
+rectangle "Competition Management" {
+  usecase "UC-001: Create Competition\n(FR-001)" as UC001
+  usecase "UC-002: Edit Competition Details\n(FR-002)" as UC002
+  usecase "UC-003: Delete Competition\n(FR-003)" as UC003
+}
+
+rectangle "Category Management" {
+  usecase "UC-004: Define Categories\n(FR-004)" as UC004
+  usecase "UC-005: Assign Athletes to Categories\n(FR-007)" as UC005
+  usecase "UC-006: Define Events per Category\n(FR-008)" as UC006
+}
+
+rectangle "Athlete Management" {
+  usecase "UC-007: Register Athletes\n(FR-005)" as UC007
+  usecase "UC-008: Assign Athletes to Clubs\n(FR-006)" as UC008
+}
+
+rectangle "Results Management" {
+  usecase "UC-009: Record Athlete Results\n(FR-009)" as UC009
+  usecase "UC-010: Mark Events Completed\n(FR-014)" as UC010
+  usecase "UC-011: Calculate IAAF Points\n(FR-010)" as UC011
+  usecase "UC-012: Auto-Calculate Points\n(FR-011)" as UC012
+}
+
+rectangle "Ranking & Reporting" {
+  usecase "UC-013: View Rankings by Category\n(FR-012)" as UC013
+  usecase "UC-014: View Athlete Details\n(FR-013)" as UC014
+  usecase "UC-015: Export Rankings\n(FR-015)" as UC015
+}
+
+' Administrator relationships
+Admin --> UC001
+Admin --> UC002
+Admin --> UC003
+Admin --> UC004
+Admin --> UC006
+Admin --> UC007
+Admin --> UC008
+Admin --> UC009
+Admin --> UC010
+
+' User relationships
+User --> UC013
+User --> UC014
+User --> UC015
+
+' System relationships
+System --> UC005
+System --> UC011
+System --> UC012
+
+' Dependencies and extensions
+UC001 ..> UC004 : <<include>>
+UC007 ..> UC008 : <<extend>>
+UC007 ..> UC005 : <<include>>
+UC009 ..> UC011 : <<include>>
+UC010 ..> UC012 : <<triggers>>
+UC013 ..> UC014 : <<include>>
+
+note right of UC005
+  Automatic assignment based on
+  birth year and gender
+end note
+
+note right of UC011
+  Uses official IAAF
+  ranking formulas
+end note
+
+note right of UC012
+  Triggered when all athletes
+  have completed their events
+end note
+
+@enduml
