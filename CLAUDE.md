@@ -32,13 +32,19 @@ This is a Spring Boot application for managing track and field competitions, bui
 - Database migrations handled by **Flyway** (migrations should be placed in `src/main/resources/db/migration/`)
 - jOOQ code is generated to `ch.martinelli.demo.aitaf.db` package from PostgreSQL schema
 - Uses Testcontainers for automatic PostgreSQL setup during development and testing
+- User jOOQ MCP server
 
 ### UI Layer
 - Built with **Vaadin Flow** (server-side Java UI framework)
 - Vaadin components are server-side rendered with automatic client-server communication
 - Frontend resources in `src/main/frontend/` are managed by Vaadin
+- Use Vaadin MCP server
 
 ### Testing
 - Uses **Testcontainers** for integration testing with real PostgreSQL
-- **Karibu Testing** for Vaadin UI unit testing
+- **Karibu Testing** for Vaadin UI unit testing. Use KaribuTesting MCP server.
 - **Playwright** and **Mopo** for browser-based UI testing
+- Don't use **Mockito**! 
+
+## Code Style
+- Don't catch Exception always catch the specific exception type
