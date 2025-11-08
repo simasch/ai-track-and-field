@@ -12,36 +12,29 @@ rectangle "Track and Field Competition Management" {
 
   ' Competition Management
   usecase "UC-001\nManage Competitions" as UC001
-  usecase "UC-002\nCreate Competition" as UC002
-  usecase "UC-003\nEdit Competition" as UC003
-  usecase "UC-004\nDelete Competition" as UC004
 
   ' Category Management
-  usecase "UC-005\nDefine Categories" as UC005
-  usecase "UC-006\nAssign Events to Categories" as UC006
+  usecase "UC-002\nManage Categories" as UC002
+  usecase "UC-003\nAssign Events to Categories" as UC003
 
   ' Athlete Management
-  usecase "UC-007\nRegister Athletes" as UC007
-  usecase "UC-008\nEdit Athlete Records" as UC008
-  usecase "UC-009\nDelete Athlete Records" as UC009
-  usecase "UC-010\nAssign Athletes to Clubs" as UC010
+  usecase "UC-004\nRegister Athletes" as UC004
+  usecase "UC-005\nManage Athletes" as UC005
 
   ' Club Management
-  usecase "UC-011\nManage Clubs" as UC011
-  usecase "UC-012\nEdit Club Records" as UC012
-  usecase "UC-013\nDelete Club Records" as UC013
+  usecase "UC-006\nManage Clubs" as UC006
 
   ' Result Recording
-  usecase "UC-014\nRecord Event Results" as UC014
+  usecase "UC-007\nRecord Event Results" as UC007
 
   ' System Use Cases
-  usecase "UC-015\nAuto-assign Athletes to Categories" as UC015
-  usecase "UC-016\nCalculate Points (IAAF)" as UC016
-  usecase "UC-017\nRank Athletes" as UC017
+  usecase "UC-008\nAuto-assign Athletes to Categories" as UC008
+  usecase "UC-009\nCalculate Points (IAAF)" as UC009
+  usecase "UC-010\nRank Athletes" as UC010
 
   ' Viewing Use Cases
-  usecase "UC-018\nView Ranking Lists" as UC018
-  usecase "UC-019\nView Individual Event Results" as UC019
+  usecase "UC-011\nView Ranking Lists" as UC011
+  usecase "UC-012\nView Individual Event Results" as UC012
 
 }
 
@@ -53,52 +46,37 @@ Admin --> UC004
 Admin --> UC005
 Admin --> UC006
 Admin --> UC007
-Admin --> UC008
-Admin --> UC009
-Admin --> UC010
-Admin --> UC011
-Admin --> UC012
-Admin --> UC013
-Admin --> UC014
 
 ' User relationships
-User --> UC018
-User --> UC019
+User --> UC011
+User --> UC012
 
 ' System relationships
-System --> UC015
-System --> UC016
-System --> UC017
-
-' Include relationships
-UC001 ..> UC002 : <<include>>
-UC001 ..> UC003 : <<include>>
-UC001 ..> UC004 : <<include>>
-
-UC011 ..> UC012 : <<include>>
-UC011 ..> UC013 : <<include>>
+System --> UC008
+System --> UC009
+System --> UC010
 
 ' Extend relationships
-UC007 ..> UC015 : <<extend>>
-UC014 ..> UC016 : <<extend>>
-UC016 ..> UC017 : <<extend>>
+UC004 ..> UC008 : <<extend>>
+UC007 ..> UC009 : <<extend>>
+UC009 ..> UC010 : <<extend>>
 
 ' Dependencies
-UC018 ..> UC017 : <<depends>>
-UC019 ..> UC016 : <<depends>>
+UC011 ..> UC010 : <<depends>>
+UC012 ..> UC009 : <<depends>>
 
-note right of UC015
+note right of UC008
   Automatically assigns athletes
   to categories based on
   birth year and gender
 end note
 
-note right of UC016
+note right of UC009
   Calculates points using
   IAAF ranking formulas
 end note
 
-note right of UC017
+note right of UC010
   Ranks athletes within
   their category after
   all events are completed
