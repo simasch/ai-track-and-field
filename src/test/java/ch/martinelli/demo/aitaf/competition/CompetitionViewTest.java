@@ -3,14 +3,12 @@ package ch.martinelli.demo.aitaf.competition;
 import ch.martinelli.demo.aitaf.KaribuTest;
 import ch.martinelli.demo.aitaf.db.enums.CompetitionStatus;
 import ch.martinelli.demo.aitaf.db.tables.records.CompetitionRecord;
-import com.github.mvysny.kaributesting.v10.*;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import org.junit.jupiter.api.Test;
@@ -50,7 +48,7 @@ class CompetitionViewTest extends KaribuTest {
         assertNotNull(view);
 
         // Find the grid
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
         assertNotNull(grid);
 
         // Verify grid contains test data (3 competitions from afterMigrate.sql)
@@ -63,7 +61,7 @@ class CompetitionViewTest extends KaribuTest {
         assertEquals("Fall Track & Field Event", items.get(2).getName());
 
         // Verify the "Create Competition" button exists
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         assertNotNull(createButton);
         assertTrue(createButton.isVisible());
     }
@@ -75,10 +73,9 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldCreateNewCompetition() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
         // Click "Create Competition" button
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         _click(createButton);
 
         // Verify dialog is opened
@@ -110,7 +107,7 @@ class CompetitionViewTest extends KaribuTest {
         assertFalse(dialog.isOpened());
 
         // Verify the new competition appears in the grid
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
         var items = grid.getListDataView().getItems().toList();
         assertEquals(4, items.size(), "Grid should now contain 4 competitions");
 
@@ -126,9 +123,8 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldEditExistingCompetition() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
         var items = grid.getListDataView().getItems().toList();
 
         // Find the "Spring Championship 2025" competition and its row index
@@ -181,9 +177,8 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldDeleteCompetitionWithoutResults() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
         var items = grid.getListDataView().getItems().toList();
 
         // Find "Spring Championship 2025" which has no results and get its row index
@@ -230,9 +225,8 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldShowWarningWhenDeletingCompetitionWithResults() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
         var items = grid.getListDataView().getItems().toList();
 
         // Find "Fall Track & Field Event" which has results (ID=3 in afterMigrate.sql) and get its row index
@@ -276,10 +270,9 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldValidateRequiredFields() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
         // Open create dialog
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         _click(createButton);
 
         Dialog dialog = _get(Dialog.class);
@@ -314,10 +307,9 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldValidateFieldLengths() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
         // Open create dialog
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         _click(createButton);
 
         Dialog dialog = _get(Dialog.class);
@@ -348,10 +340,9 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldValidateUniqueCompetitionName() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
         // Open create dialog
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         _click(createButton);
 
         Dialog dialog = _get(Dialog.class);
@@ -382,10 +373,9 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldRejectPastDateForNewCompetition() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
         // Open create dialog
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         _click(createButton);
 
         Dialog dialog = _get(Dialog.class);
@@ -416,9 +406,8 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldAllowPastDateWhenEditingCompetition() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
         var items = grid.getListDataView().getItems().toList();
 
         // Find "Spring Championship 2025" and get its row index
@@ -457,10 +446,9 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldCancelCreationAndDiscardChanges() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
         // Open create dialog
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         _click(createButton);
 
         Dialog dialog = _get(Dialog.class);
@@ -477,7 +465,7 @@ class CompetitionViewTest extends KaribuTest {
         assertFalse(dialog.isOpened());
 
         // Verify no new competition was created
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
         var items = grid.getListDataView().getItems().toList();
         assertEquals(3, items.size(), "Should still have only 3 competitions");
         assertFalse(items.stream()
@@ -490,10 +478,9 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldDefaultStatusToPlanned() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
         // Open create dialog
-        Button createButton = _get(view, Button.class, spec -> spec.withText("Create Competition"));
+        Button createButton = _get(Button.class, spec -> spec.withText("Create Competition"));
         _click(createButton);
 
         Dialog dialog = _get(Dialog.class);
@@ -530,9 +517,8 @@ class CompetitionViewTest extends KaribuTest {
     @Test
     void shouldDisplayGridColumnsCorrectly() {
         UI.getCurrent().navigate(CompetitionView.class);
-        CompetitionView view = _get(CompetitionView.class);
 
-        Grid<CompetitionRecord> grid = _get(view, Grid.class);
+        Grid<CompetitionRecord> grid = _get(Grid.class);
 
         // Verify grid has expected columns
         var columns = grid.getColumns();
