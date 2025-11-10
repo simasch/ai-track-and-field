@@ -62,8 +62,7 @@ public class CompetitionService {
     public CompetitionRecord save(CompetitionRecord competition) {
         dsl.attach(competition);
 
-        boolean isNew = competition.getId() == null;
-        if (isNew) {
+        if (competition.getStatus() == null) {
             competition.setStatus(CompetitionStatus.PLANNED);
         }
 

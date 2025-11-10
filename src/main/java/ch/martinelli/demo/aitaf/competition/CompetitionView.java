@@ -100,9 +100,8 @@ public class CompetitionView extends VerticalLayout {
         if (isNew) {
             editedCompetition = new CompetitionRecord();
         } else {
-            // Create a copy and preserve the ID for editing
-            editedCompetition = competition.copy();
-            editedCompetition.setId(competition.getId());
+            // Use the existing record directly for editing
+            editedCompetition = competition;
         }
 
         Dialog dialog = new Dialog();
