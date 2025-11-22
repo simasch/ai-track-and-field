@@ -56,16 +56,20 @@ public class CompetitionView extends VerticalLayout {
         // Configure grid
         grid = new Grid<>(CompetitionRecord.class, false);
         grid.addColumn(CompetitionRecord::getName)
+                .setKey("name")
                 .setHeader("Name")
                 .setAutoWidth(true)
                 .setFlexGrow(1);
         grid.addColumn(competitionRecord -> competitionRecord.getDate().toString())
+                .setKey("date")
                 .setHeader("Date")
                 .setAutoWidth(true);
         grid.addColumn(CompetitionRecord::getLocation)
+                .setKey("location")
                 .setHeader("Location")
                 .setAutoWidth(true);
         grid.addColumn(competitionRecord -> formatStatus(competitionRecord.getStatus()))
+                .setKey("status")
                 .setHeader("Status")
                 .setAutoWidth(true);
 
@@ -80,7 +84,7 @@ public class CompetitionView extends VerticalLayout {
             deleteButton.addClickListener(e -> confirmDelete(competition));
 
             return new HorizontalLayout(editButton, deleteButton);
-        }).setHeader("Actions").setAutoWidth(true);
+        }).setKey("actions").setHeader("Actions").setAutoWidth(true);
 
         grid.setSizeFull();
 
@@ -100,9 +104,8 @@ public class CompetitionView extends VerticalLayout {
         if (isNew) {
             editedCompetition = new CompetitionRecord();
         } else {
-            // Create a copy and preserve the ID for editing
-            editedCompetition = competition.copy();
-            editedCompetition.setId(competition.getId());
+            // Use the original record for editing (jOOQ will track changes)
+            editedCompetition = competition;
         }
 
         Dialog dialog = new Dialog();
