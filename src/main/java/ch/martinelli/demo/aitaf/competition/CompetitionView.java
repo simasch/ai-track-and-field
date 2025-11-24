@@ -80,7 +80,7 @@ public class CompetitionView extends VerticalLayout {
             deleteButton.addClickListener(e -> confirmDelete(competition));
 
             return new HorizontalLayout(editButton, deleteButton);
-        }).setHeader("Actions").setAutoWidth(true);
+        }).setHeader("Actions").setKey("actions").setAutoWidth(true);
 
         grid.setSizeFull();
 
@@ -100,9 +100,8 @@ public class CompetitionView extends VerticalLayout {
         if (isNew) {
             editedCompetition = new CompetitionRecord();
         } else {
-            // Create a copy and preserve the ID for editing
-            editedCompetition = competition.copy();
-            editedCompetition.setId(competition.getId());
+            // Work directly with the competition record
+            editedCompetition = competition;
         }
 
         Dialog dialog = new Dialog();
