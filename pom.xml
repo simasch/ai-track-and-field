@@ -41,7 +41,7 @@
         <mopo.version>0.0.5</mopo.version>
 
         <testcontainers.version>2.0.2</testcontainers.version>
-        <flyway-maven-plugin.version>11.15.0</flyway-maven-plugin.version>
+        <flyway-maven-plugin.version>11.17.2</flyway-maven-plugin.version>
         <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
 
         <db.image>postgres:latest</db.image>
