@@ -36,7 +36,7 @@ public class CompetitionService {
      * Used for validation in the UI.
      * BR-001: Competition name uniqueness.
      *
-     * @param name the competition name to check
+     * @param name      the competition name to check
      * @param excludeId ID to exclude from the check (for updates), or null
      * @return true if the name is unique
      */
@@ -65,9 +65,10 @@ public class CompetitionService {
         boolean isNew = competition.getId() == null;
         if (isNew) {
             competition.setStatus(CompetitionStatus.PLANNED);
+            competition.insert();
+        } else {
+            competition.update();
         }
-
-        competition.store();
 
         return competition;
     }
