@@ -4,8 +4,15 @@ Create the test data per test using Flyway migrations in src/test/resources/db/m
 Don't use a service, repository or DSLContext to create test data.
 Make sure to remove data that was created during the tests but don't delete all data.
 Use AssertJ assertions or KaribuTesting assertions.
+Karibu Tests may not use @Transactional because the transaction boundary must stay!
+Use the KaribuTesting MCP server.
 The Karibu Testing documentation can be found
 here: https://github.com/mvysny/karibu-testing/tree/master/karibu-testing-v10
+
+There are important helper classes:
+- com.github.mvysny.kaributesting.v10.GridKt
+- com.github.mvysny.kaributools.NotificationKt
+- com.github.mvysny.kaributesting.v10.pro.ConfirmDialogKt
 
 Example:
 

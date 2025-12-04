@@ -80,7 +80,7 @@ public class CompetitionView extends VerticalLayout {
             deleteButton.addClickListener(e -> confirmDelete(competition));
 
             return new HorizontalLayout(editButton, deleteButton);
-        }).setHeader("Actions").setAutoWidth(true);
+        }).setHeader("Actions").setAutoWidth(true).setKey("actions");
 
         grid.setSizeFull();
 
