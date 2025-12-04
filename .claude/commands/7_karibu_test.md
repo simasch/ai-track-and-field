@@ -11,7 +11,7 @@ here: https://github.com/mvysny/karibu-testing/tree/master/karibu-testing-v10
 
 There are important helper classes:
 - com.github.mvysny.kaributesting.v10.GridKt
-- com.github.mvysny.kaributools.NotificationKt
+- com.github.mvysny.kaributesting.v10.NotificationsKt
 - com.github.mvysny.kaributesting.v10.pro.ConfirmDialogKt
 
 Example:
