@@ -93,7 +93,7 @@ class CompetitionViewTest extends KaribuTest {
 
         // When: Fill in the form and save
         nameField.setValue("New Test Competition");
-        dateField.setValue(LocalDate.of(2025, 12, 25));
+        dateField.setValue(LocalDate.now().plusDays(10));
         locationField.setValue("Test Stadium");
         statusField.setValue(CompetitionStatus.PLANNED);
 
@@ -110,7 +110,7 @@ class CompetitionViewTest extends KaribuTest {
                 .where(Tables.COMPETITION.NAME.eq("New Test Competition"))
                 .fetchOne();
         assertThat(newCompetition).isNotNull();
-        assertThat(newCompetition.getDate()).isEqualTo(LocalDate.of(2025, 12, 25));
+        assertThat(newCompetition.getDate()).isEqualTo(LocalDate.now().plusDays(10));
         assertThat(newCompetition.getLocation()).isEqualTo("Test Stadium");
         assertThat(newCompetition.getStatus()).isEqualTo(CompetitionStatus.PLANNED);
     }
@@ -146,7 +146,7 @@ class CompetitionViewTest extends KaribuTest {
 
         // When: Try to create a competition with an existing name
         nameField.setValue("Spring Athletics Championship"); // Existing name from test data
-        dateField.setValue(LocalDate.of(2025, 12, 25));
+        dateField.setValue(LocalDate.now().plusDays(10));
         locationField.setValue("Test Stadium");
 
         _click(_get(dialog, Button.class, spec -> spec.withText("Save")));
