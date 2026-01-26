@@ -167,7 +167,7 @@ class CompetitionViewIT extends PlaywrightIT {
         mopo.waitForConnectionToSettle();
 
         // Confirm deletion in the dialog overlay
-        page.locator("vaadin-confirm-dialog-overlay vaadin-button[slot='confirm-button']").click();
+        page.locator("vaadin-confirm-dialog vaadin-button[slot='confirm-button']").click();
         mopo.waitForConnectionToSettle();
 
         // Verify success notification - use filter to find the specific notification
@@ -299,7 +299,7 @@ class CompetitionViewIT extends PlaywrightIT {
             gridPw.getRow(rowIndex).getCell(4).locator("vaadin-button").filter(new Locator.FilterOptions().setHasText("Delete")).click();
             mopo.waitForConnectionToSettle();
             // Click the confirm button in the confirm dialog overlay
-            page.locator("vaadin-confirm-dialog-overlay vaadin-button[slot='confirm-button']").click();
+            page.locator("vaadin-confirm-dialog vaadin-button[slot='confirm-button']").click();
             mopo.waitForConnectionToSettle();
         }
     }
