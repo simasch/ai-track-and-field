@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.7</version>
+        <version>4.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -31,17 +31,17 @@
 
     <properties>
         <java.version>21</java.version>
-        <vaadin.version>24.9.3</vaadin.version>
-        <jooq.version>3.20.8</jooq.version>
+        <vaadin.version>25.0.3</vaadin.version>
+        <jooq.version>3.20.9</jooq.version>
         <jooq-spring.version>0.4.0</jooq-spring.version>
         <jooq-utilities.version>1.1.2</jooq-utilities.version>
 
         <karibu-testing.version>2.5.0</karibu-testing.version>
-        <playwright.version>1.56.0</playwright.version>
-        <mopo.version>0.0.5</mopo.version>
+        <playwright.version>1.57.0</playwright.version>
+        <mopo.version>0.0.6</mopo.version>
 
         <testcontainers.version>2.0.2</testcontainers.version>
-        <flyway-maven-plugin.version>11.15.0</flyway-maven-plugin.version>
+        <flyway-maven-plugin.version>11.18.0</flyway-maven-plugin.version>
         <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
 
         <db.image>postgres:latest</db.image>
@@ -63,6 +63,10 @@
             <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
@@ -72,11 +76,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -97,6 +106,10 @@
                     <artifactId>mockito-junit-jupiter</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway-test</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
