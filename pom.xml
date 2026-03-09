@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -36,7 +36,7 @@
         <jooq-spring.version>0.4.0</jooq-spring.version>
         <jooq-utilities.version>1.1.2</jooq-utilities.version>
 
-        <karibu-testing.version>2.5.0</karibu-testing.version>
+        <karibu-testing.version>2.6.1</karibu-testing.version>
         <playwright.version>1.57.0</playwright.version>
         <mopo.version>0.0.6</mopo.version>
 
@@ -63,8 +63,8 @@
             <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -72,11 +72,17 @@
         </dependency>
 
         <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -113,14 +119,12 @@
             <artifactId>testcontainers-postgresql</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.github.mvysny.kaributesting</groupId>
             <artifactId>karibu-testing-v10-spring</artifactId>
             <version>${karibu-testing.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.microsoft.playwright</groupId>
             <artifactId>playwright</artifactId>
