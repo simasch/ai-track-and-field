@@ -38,7 +38,7 @@
 
         <karibu-testing.version>2.7.3</karibu-testing.version>
         <playwright.version>1.64.0</playwright.version>
-        <mopo.version>0.0.6</mopo.version>
+        <mopo.version>0.0.7</mopo.version>
 
         <testcontainers.version>2.0.4</testcontainers.version>
         <flyway-maven-plugin.version>13.12.1</flyway-maven-plugin.version>
